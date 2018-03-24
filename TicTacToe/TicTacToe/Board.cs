@@ -11,6 +11,13 @@ namespace TicTacToe
         public int[] Squares { get; private set; } =
             new int[9] { -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
+        /// <summary>
+        /// Marks a square (1-9) for one of the players (0-1)
+        /// </summary>
+        /// <param name="squareIndex">The number of the square as it appears
+        /// within the game's interface (1-9)</param>
+        /// <param name="playerIndex">The index for the player to mark the
+        /// square for (0-1)</param>
         public void MarkSquare(int squareIndex, int playerIndex)
         {
             // Validate that parameters exist on the board and refer
@@ -37,6 +44,14 @@ namespace TicTacToe
             Squares[squareIndex - 1] = playerIndex;
         }
 
+        /// <summary>
+        /// Check who owns a specific square by the square's index as it
+        /// appears in the game's interface (1-9) 
+        /// </summary>
+        /// <param name="squareIndex">A square's index as it appears
+        /// in the game's interface (1-9)</param>
+        /// <returns>The player index (0-1) of the player who owns that square
+        /// or -1 if no player owns that square</returns>
         public int CheckSquare(int squareIndex)
         {
             // Validate that parameter refers to an actual square
@@ -49,6 +64,12 @@ namespace TicTacToe
             return Squares[squareIndex - 1];
         }
 
+        /// <summary>
+        /// Check if the game board is in a winning state (one player has
+        /// completed a row, column, or diagonal)
+        /// </summary>
+        /// <returns>The player's index (0-1) who has won or -1 if the board
+        /// is not in a winning state</returns>
         public int CheckWinningState()
         {
             // Check rows
@@ -90,6 +111,12 @@ namespace TicTacToe
             return -1;
         }
 
+        /// <summary>
+        /// Create an ASCII-art representation of the board's state as a string
+        /// </summary>
+        /// <param name="players">An array of players playing the game. Used
+        /// to determine which token to display on taken squares.</param>
+        /// <returns>String with ASCII art representing the current board state</returns>
         public string CreateArtString(Player[] players)
         {
             StringBuilder stringBuilder = new StringBuilder();

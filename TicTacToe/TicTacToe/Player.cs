@@ -7,6 +7,10 @@ namespace TicTacToe
     public class Player
     {
         private char _token;
+
+        /// <summary>
+        /// The letter used to represent this player on the board
+        /// </summary>
         public char Token
         {
             get
@@ -26,6 +30,10 @@ namespace TicTacToe
         }
 
         private string _name;
+
+        /// <summary>
+        /// The given name of this player
+        /// </summary>
         public string Name 
         {
             get
@@ -44,6 +52,12 @@ namespace TicTacToe
             }
         }
 
+        /// <summary>
+        /// Constructor for Player
+        /// </summary>
+        /// <param name="token">The token which is used to represent this player
+        /// on the game board</param>
+        /// <param name="name">The player's given name</param>
         public Player(char token, string name)
         {
             Token = token;

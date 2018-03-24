@@ -4,29 +4,25 @@ using System.Text;
 
 namespace TicTacToe
 {
+    /// <summary>
+    /// Represents a single game of Tic Tac Toe
+    /// </summary>
     class Game
     {
         public Board GameBoard { get; private set; } = new Board();
         public Player[] Players { get; private set; }
 
-        public Game(char firstPlayerToken, string firstPlayerName,
-            char secondPlayerToken, string secondPlayerName)
-        {
-            if (firstPlayerToken == secondPlayerToken)
-            {
-                throw new ArgumentException("Players cannot have the" +
-                    " same character marks");
-            }
-
-            Players = new Player[2]
-            {
-                new Player(firstPlayerToken, firstPlayerName),
-                new Player(secondPlayerToken, secondPlayerName)
-            };
-        }
-
+        /// <summary>
+        /// Constructor for Game
+        /// </summary>
+        /// <param name="players">An array of 2 players who will be playing</param>
         public Game(Player[] players)
         {
+            if (players.Length != 2)
+            {
+                throw new ArgumentException("Tic Tac Toe can only be played " +
+                    "with a maximum of two players.");
+            }
             if (players[0].Token == players[1].Token)
             {
                 throw new ArgumentException("Players cannot have the" +
@@ -36,6 +32,12 @@ namespace TicTacToe
             Players = players;
         }
 
+        /// <summary>
+        /// Interactive (via the console) method of creating a new Game object
+        /// using parameters provided by the user.
+        /// </summary>
+        /// <returns>A new Game object with players created using the information
+        /// gathered from the users via the console.</returns>
         public static Game CreateGameInteractive()
         {
             Player[] players = new Player[2];
@@ -82,9 +84,15 @@ namespace TicTacToe
             return new Game(players);
         }
 
+        /// <summary>
+        /// Begins the game loop. This method will block the calling thread
+        /// until the game has been completed.
+        /// </summary>
+        /// <returns>True if the players would like to play another game.</returns>
         public bool BeginLoop()
         {
-            for (;;)
+            // All squares will have been exhausted in 9 turns
+            for (int turn = 0; turn < 9; turn++)
             {
                 int currentPlayer = 0;
 
@@ -148,6 +156,22 @@ namespace TicTacToe
                     currentPlayer++;
                 }
             }
+
+            // If the number of turns have been exhausted, tell the user that
+            // the game has resulted in a tie
+            Console.Clear();
+            Console.WriteLine(GameBoard.CreateArtString(Players));
+            Console.WriteLine("\nThe game has resulted in a tie!");
+            Console.WriteLine("Would you like to play again? (Y/N)");
+
+            // Keep reading keys until either Y or N is pressed
+            ConsoleKey tieResponse;
+            do
+            {
+                tieResponse = Console.ReadKey(true).Key;
+            } while (tieResponse != ConsoleKey.Y && tieResponse != ConsoleKey.N);
+
+            return tieResponse == ConsoleKey.Y;
         }
     }
 }
