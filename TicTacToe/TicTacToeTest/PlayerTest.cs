@@ -37,7 +37,7 @@ namespace TicTacToeTest
         public void CanSetToken()
         {
             // Arrange
-            Player player = new Player('@', "Jack");
+            Player player = new Player('G', "Jack");
             char oldToken = player.Token;
 
             // Act

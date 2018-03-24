@@ -15,13 +15,13 @@ namespace TicTacToe
             }
             set 
             {
-                if (!char.IsLetter(value) && !char.IsSymbol(value))
+                if (!char.IsLetter(value))
                 {
                     throw new ArgumentOutOfRangeException("Player " +
-                        "tokens must be letters or symbols", nameof(value));
+                        $"tokens must be letters", nameof(value));
                 }
 
-                _token = value;
+                _token = char.ToUpper(value);
             }
         }
 
