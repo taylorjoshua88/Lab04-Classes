@@ -1,101 +1,107 @@
-![cf](http://i.imgur.com/7v5ASc8.png) Lab 4: Tic-Tac-Toe
-=====================================
+# TicTacToe
 
-## To Submit this Assignment
-- fork this repository
-- create a new branch named `lab04-`; + `<your name>` **e.g.** `lab04-amanda`
-- write your code
-- push to your repository
-- submit a pull request to this repository
-- submit a link to your PR in canvas
-- Include a Readme.md (contents described below)
+**Author**: Joshua Taylor
+**Version**: 1.0.0
 
-## Directions
-In a new Console Applicaiton within Visual Studio, create a Tic-Tac-Toe game. 
+## Overview
 
-Create your program to follow the traditional Tic-Tac-Toe rules. This includes (but not limited to...):
-This game will allow for 2 players to play side by side (on the same screen/board) and alternate
-between selecting their positions on the board. 
+TicTacToe is a turn-based game played on a 3x3 grid of squares. Players take
+turns marking squares with their unique, single-letter token which shows that
+they own that square. Once a player has completed a full row, column, or
+diagonal on the board, that player wins the game. If no player has completed
+any rows after all of the squares have been taken, then the game ends in a tie.
 
-A winner is determined when either Player 1 or Player 2 has succesfully placed 3 of their markers either in a row
-horizontally or vertically. 
+## Getting Started
 
-When the game is over, ask the user if they want to play again. 
+TicTacToe targets the .NET Core 2.0 platform. The .NET Core 2.0 SDK can
+be downloaded from the following URL for Windows, Linux, and macOS:
 
-If the user says yes -> start a new game
-if the user says no -> terminate the program
+https://www.microsoft.com/net/download/
 
-## Program Components
-Create a game board that looks like this:
+The dotnet CLI utility would then be used to build and run the application:
 
-```
-|1||2||3|
-|4||5||6|
-|7||8||9|
-```
-The numbers in each of the squares will indicate the position number. Prompt the user to select which position they wish to 
-play and then replace that position with either an `X` or an `O`.
+    cd TicTacToe
+    dotnet build
+    dotnet run
 
-A winning board may look like this (O Wins!):
+Additionally, users can build, run, and perform unit testing using Visual
+Studio 2017 or greater by opening the solution file at the root of this
+repository.
 
-```
-|X||X||O|
-|4||O||X|
-|O||X||9|
-```
-Remember that Tic-Tac-Toe is a 2 player game, so be sure to "switch" between players. Make it known to the user that
-their turn is over and it's time for the next players turn. You will have both play on the same board. 
+## Example
 
- Here are a couple of ideas for different classes that you can have. You are not required to have these classes, but it may be a good start for guidance...
-- Game Board (this should construct the board after every turn with it's new state)
-- Player (This will hold the players information such as name or marker, in addition to any actions that user may take)
+#### Starting a New Game ####
+![New Game Screenshot](/assets/newGameScreenshot.JPG)
+#### Taking a Turn ####
+![Taking a Turn Screenshot](/assets/turnScreenshot.JPG)
+#### Victory ####
+![Victory Screenshot](/assets/victoryScreenshot.JPG)
 
-Be sure to check for a winner after each turn. Be aware that it is possible to have a tie/draw if no winner can be determined and all 
-marks on the board are occupied. 
+## Architecture
 
-Stay within scope of this project. Please only use concepts and resources that we have covered so far in previous labs/lectures/assigned prework. 
-If you are unsure if it is within scope, please ask a TA or instructor.
+TicTacToe uses C# and the .NET Core 2.0 platform. Squares are stored as an
+array of integers representing which player owns that square (or -1 if no
+player currently owns that square). Gameplay continues until a winning board
+state has been achieved (one player has completed a row, column, or diagonal),
+determined using the Board.CheckWinningState() method.
 
-## Additional Resources
-Review/research these resources to assist you in the construction of your program:
+The gameplay UI is handled through a command line interface on the console
+provided via the System namespace.
 
-- [Two Dimensional Arrays](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/arrays/multidimensional-arrays)
+### Data Model
 
-## ReadMe
-A README is a module consumer's first -- and maybe only -- look into your creation. The consumer wants a module to fulfill their need, so you must explain exactly what need your module fills, and how effectively it does so.
-<br />
-Your job is to
-1. tell them what it is (with context)
-2. show them what it looks like in action
-3. show them how they use it
-4. tell them any other relevant details
-<br />
+TicTacToe stores the game's state using objects stored in memory from three
+primary classes: Game, Board, Player. No data persistence is supported by
+this game.
 
-This is ***your*** job. It's up to the module creator to prove that their work is a shining gem in the sea of slipshod modules. 
-Since so many developers' eyes will find their way to your README before anything else, quality here is your public-facing measure of your work.
+#### Game ####
 
-<br /> Refer to the sample-README in the class repo for an example. 
-- [Reference](https://github.com/noffle/art-of-readme)
+The Game class contains a single game session's complete state through a
+Board object and two Player objects stored as an array. The game class
+provides a static method to prompt players for their names and selected
+tokens in addition to a method which takes control of the calling thread
+to run a game loop until the game's completion. Players are notified of
+a winner or a tie depending on the state of the board.
 
-## Rubric
-- 7pts: Program meets all requirements described in Lab directions
+#### Board ####
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	7       | Program runs as expected, no exceptions during execution |
-	5       | Program runs/compiles, Program contains logic/process errors|
-	4       | Program runs/compiles, but throws exceptions during execution |
-	2       | Missing tests // tests are not passing // not enough valid tests |
-	2       | Missing Readme Document // Readme Document does not meet standards |
-	0       | Program does not compile/run. Build Errors. |
-	0       | No Submission |
+The Board class represents the 3x3 matrix of squares which the players
+take turns marking for themselves. The squares are stored as a
+one-dimensional array with 9 elements (3 rows * 3 columns). Methods are
+available to check the owner of a particular square (if applicable),
+mark a square for a particular player, and to check for a winning game
+state.
 
-- 3pts: Code meets industry standards
-	- These points are only awardable if you score at minimum a 5/7 on above criteria
+#### Player ####
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	3       | Code meets Industry Standards // methods and variables namings are appropriate // Selective and iterative statements are used appropriately, Fundamentals are propertly executed // Clearly and cleanly commented |
-	2       | syntax for naming conventions are not correct (camelCasing and PascalCasing are used appropriately) // slight errors in use of fundamentals // Missing some comments |
-	1       | Inappropriate naming conventions, and/or inappropriate use of fundamentals // Code is not commented  |
-	0       | No Submission or incomplete submission |
+The Player class holds information related to each player playing the game.
+A string representing the player's given name along with a single character
+representing that player's chosen token is stored on objects of this class.
+These properties are used by the Board class to draw an ASCII art
+representation of the game board as well as by the Game class in order to
+tell the players whose turn it is and/or who is the winner of the game.
+
+### Command Line Interface (CLI)
+
+TicTacToe operates as an infinite loop after gathering the player's names
+and chosen tokens. Each iteration of the loop has the board written to the
+console as well as a prompt for the current player to choose a square from
+a selection of 9 squares. Each square has been assigned a number 1-9 which
+is used to identify one square from another. Input is provided by the 
+keyboard using the .NET System.Console class.
+
+### Game Logic
+
+Each iteration of the game loop has a call to Board.CheckWinningState().
+This method checks each column, row, and diagonal for a winner by iterating
+through the game's Board object's Squares array. Players are not allowed to
+select squares that another player already owns. Once a winner (or a tie) has
+been determined using the Board.CheckWinningState() method, the game is over
+and prompts if the players would like to play another session. If the game
+has not been won yet, this process repeats until there are no more squares,
+which is interpreted as a tie.
+
+## Change Log
+
+* 3.23.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Initial
+release. All tests are passing.
