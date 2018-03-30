@@ -7,7 +7,7 @@ namespace TicTacToe
     /// <summary>
     /// Represents a single game of Tic Tac Toe
     /// </summary>
-    class Game
+    public class Game
     {
         public Board GameBoard { get; private set; } = new Board();
         public Player[] Players { get; private set; }
@@ -21,7 +21,7 @@ namespace TicTacToe
             if (players.Length != 2)
             {
                 throw new ArgumentException("Tic Tac Toe can only be played " +
-                    "with a maximum of two players.");
+                    "with a maximum of two players.", nameof(players.Length));
             }
             if (players[0].Token == players[1].Token)
             {
@@ -51,19 +51,23 @@ namespace TicTacToe
                 Console.WriteLine($"\n\nPlease enter player {currentPlayer + 1}'s name:");
                 string playerName = Console.ReadLine();
 
-                Console.WriteLine($"Please enter a token for player {currentPlayer + 1}:");
-                char playerToken = Console.ReadKey().KeyChar;
+                string playerTokenInput = "";
+                while (playerTokenInput.Length != 1)
+                {
+                    Console.WriteLine($"Please enter a single token letter for player {currentPlayer + 1}:");
+                    playerTokenInput = Console.ReadLine();
+                }
 
                 try
                 {
-                    players[currentPlayer] = new Player(playerToken, playerName);
+                    players[currentPlayer] = new Player(playerTokenInput[0], playerName);
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (ArgumentOutOfRangeException)
                 {
-                    Console.WriteLine("\nInvalid token provided. Please only use letters.");
+                    Console.WriteLine("\nInvalid token provided. Please only use a single letter.");
                     continue;
                 }
-                catch (ArgumentException e)
+                catch (ArgumentException)
                 {
                     Console.WriteLine("Please type a name with at least 1 letter.");
                     continue;
