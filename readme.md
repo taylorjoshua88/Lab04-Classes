@@ -1,7 +1,7 @@
 # TicTacToe
 
 **Author**: Joshua Taylor
-**Version**: 1.0.1
+**Version**: 1.0.2
 
 ## Overview
 
