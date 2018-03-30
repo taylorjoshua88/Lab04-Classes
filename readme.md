@@ -103,5 +103,8 @@ which is interpreted as a tie.
 
 ## Change Log
 
+* 3.30.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Changed
+user input method for token selection from Console.ReadKey() to
+Console.ReadLine(). Added unit test for the Game class constructor.
 * 3.23.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Initial
 release. All tests are passing.
